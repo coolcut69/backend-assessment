@@ -19,11 +19,11 @@ import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @Slf4j
-public class PackController {
+public class PacksController implements PacksSwagger {
 
     private final WolvesService service;
 
-    public PackController(WolvesService service) {
+    public PacksController(WolvesService service) {
         this.service = service;
     }
 
@@ -37,17 +37,16 @@ public class PackController {
         return ResponseEntity.ok(resources);
     }
 
-
     @PostMapping("api/packs/{pack-id}/wolves/{wolf-id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    void addWolfToPack(@PathVariable("pack-id") Long packId, @PathVariable("wolf-id") Long wolfId){
+    public void addWolfToPack(@PathVariable("pack-id") Long packId, @PathVariable("wolf-id") Long wolfId) {
         log.info("POST /api/packs/" + packId + "/wolves/" + wolfId);
         service.addWolfToPack(packId, wolfId);
     }
 
     @DeleteMapping("api/packs/{pack-id}/wolves/{wolf-id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    void deleteWolfToPack(@PathVariable("pack-id") Long packId, @PathVariable("wolf-id") Long wolfId){
+    public void deleteWolfToPack(@PathVariable("pack-id") Long packId, @PathVariable("wolf-id") Long wolfId) {
         log.info("DELETE /api/packs/" + packId + "/wolves/" + wolfId);
         service.deleteWolfFromPack(packId, wolfId);
     }
